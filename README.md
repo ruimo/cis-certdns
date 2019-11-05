@@ -9,7 +9,7 @@ Install Docker.
 | Name | Description |
 -|-
 | CRN | CRN (*1) |
-| ZONE_ID | Domein ID (*1) |
+| ZONE_ID | Domain ID (*1) |
 | API_KEY | API key (*2) |
 | EMAIL | Admin email for Lets Encrypt (-m parameter for certbot) |
 | HOST_NAME | Host name part for your certificate |
