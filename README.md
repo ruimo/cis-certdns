@@ -4,7 +4,7 @@ Create or renew SSL certificate with Lets Encrypt in IBM Cloud Internet Service(
 ## Prerequisite
 Install Docker.
 
-Caution: Docker image path is changed. Use ghcr.io/ruimo/cis-certdns for the latest version.
+Caution: **Docker image path is changed. Use ghcr.io/ruimo/cis-certdns for the latest version.**
 
 ## Environment variable
 
