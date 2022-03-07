@@ -4,6 +4,8 @@ Create or renew SSL certificate with Lets Encrypt in IBM Cloud Internet Service(
 ## Prerequisite
 Install Docker.
 
+Caution: Docker image path is changed. Use ghcr.io/ruimo/cis-certdns for the latest version.
+
 ## Environment variable
 
 | Name | Description |
@@ -30,8 +32,9 @@ Install Docker.
 Invoke createcert.sh
 
 Example:
-
-    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR EMAIL' -e HOST_NAME='www' -e DOMAIN='yourdomain.com' -e API_KEY=$API_KEY --rm ruimo/cis-certdns createcert.sh --staging
+    # You should avoid specifying SL_API_KEY as a literal for docker run command for security reason.
+    $ export API_KEY=XXX
+    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR EMAIL' -e HOST_NAME='www' -e DOMAIN='yourdomain.com' -e API_KEY --rm  ghcr.io/ruimo/sl-certdns:latest createcert.sh --staging
 
 This creates SSL certificate for site 'www.yourdmain.com'. Your SSL certificate will be stored in /etc/letsencrypt. You can specify arguments to createcert.sh. They will be simply passed to certbot command. Since '--staging' is specified in this case, certbot will create certificate for staging.
 
@@ -41,7 +44,7 @@ You can create wildcard certification. Specify '*' for hostname and argument --s
 
 Example:
 
-    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR EMAIL' -e HOST_NAME='*' -e DOMAIN='yourdomain.com' -e API_KEY=$API_KEY --rm ruimo/cis-certdns createcert.sh --server https://acme-v02.api.letsencrypt.org/directory --staging
+    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR EMAIL' -e HOST_NAME='*' -e DOMAIN='yourdomain.com' -e API_KEY --rm  ghcr.io/ruimo/sl-certdns:latest createcert.sh --server https://acme-v02.api.letsencrypt.org/directory --staging
 
 This create SSL certificate for site '*.yourdomain.com'. Your SSL certificate will be stored in /etc/letsencrypt. As same as before, '--staging' is specified to let certbot create certificate for staging.
 
@@ -51,11 +54,11 @@ Invoke renewcert.sh
 
 Example:
 
-    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR MAIL ADDRESS' -e HOST_NAME='www' -e DOMAIN='yourdomain.com' -e API_KEY=$API_KEY --rm ruimo/cis-certdns renewcert.sh --staging --renew-by-default
+    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR MAIL ADDRESS' -e HOST_NAME='www' -e DOMAIN='yourdomain.com' -e API_KEY --rm  ghcr.io/ruimo/sl-certdns:latest renewcert.sh --staging --renew-by-default
 
 Example(Wildcard):
 
-    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR MAIL ADDRESS' -e HOST_NAME='*' -e DOMAIN='yourdomain.com' -e API_KEY=$API_KEY --rm ruimo/cis-certdns renewcert.sh --server https://acme-v02.api.letsencrypt.org/directory --staging --renew-by-default
+    $ docker run -v /etc/letsencrypt:/etc/letsencrypt -e CRN=$CRN -e ZONE_ID=$DOMAIN_ID -e EMAIL='YOUR MAIL ADDRESS' -e HOST_NAME='*' -e DOMAIN='yourdomain.com' -e API_KEY --rm  ghcr.io/ruimo/sl-certdns:latest renewcert.sh --server https://acme-v02.api.letsencrypt.org/directory --staging --renew-by-default
 
 This renews all certificates under /etc/letsencrypt. You can specify arguments to renewcert.sh. They will be simply passed to certbot command. Since '--staging' is specified in this case, certbot will create certificate for staging. The '--renew-by-default' 
 force certbot to renew certificate always.
